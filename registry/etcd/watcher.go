@@ -65,6 +65,10 @@ func (ew *etcdWatcher) Next() (*registry.Result, error) {
 			case clientv3.EventTypeDelete:
 				action = "delete"
 
+				if ev.PrevKv == nil {
+					continue
+				}
+
 				// get service from prevKv
 				service = decode(ev.PrevKv.Value)
 			}
